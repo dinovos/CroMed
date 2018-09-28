@@ -1,0 +1,658 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CroMedDB_DataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dokument">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PoslovniSubjekt" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategorija">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Opis" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="PoslovniSubjekt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Kontakt" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Adresa" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="OIB" Type="varchar" MaxLength="15" />
+          <Property Name="VrstaSubjekta" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proizvodi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Kategorija" Type="int" Nullable="false" />
+          <Property Name="StanjeZaliha" Type="int" Nullable="false" />
+          <Property Name="NabavnaCijena" Type="float" />
+          <Property Name="ProdajnaCijena" Type="float" />
+        </EntityType>
+        <EntityType Name="PromjeneStanjaDokumenta">
+          <Key>
+            <PropertyRef Name="Dokument" />
+            <PropertyRef Name="StanjeDokumenta" />
+          </Key>
+          <Property Name="Dokument" Type="int" Nullable="false" />
+          <Property Name="StanjeDokumenta" Type="int" Nullable="false" />
+          <Property Name="DatumPromjene" Type="datetime" />
+          <Property Name="Napomena" Type="varchar" MaxLength="100" />
+          <Property Name="Zaposlenik" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RazinaOvlasti">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Opis" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StanjeDokumenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Vrsta" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StavkeDokumenta">
+          <Key>
+            <PropertyRef Name="Dokument" />
+            <PropertyRef Name="Proizvod" />
+          </Key>
+          <Property Name="Dokument" Type="int" Nullable="false" />
+          <Property Name="Proizvod" Type="int" Nullable="false" />
+          <Property Name="Kolicina" Type="int" Nullable="false" />
+          <Property Name="Rabat" Type="float" />
+        </EntityType>
+        <EntityType Name="VrstaSubjekta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Opis" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zaposlenik">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ime" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Prezime" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Adresa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Kontakt" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="RazinaOvlasti" Type="int" Nullable="false" />
+          <Property Name="KorisnickoIme" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Lozinka" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Dokument_ToPoslovniSubjekt">
+          <End Role="PoslovniSubjekt" Type="Self.PoslovniSubjekt" Multiplicity="1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PoslovniSubjekt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="PoslovniSubjekt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoslovniSubjekt_VrstaSubjekta">
+          <End Role="VrstaSubjekta" Type="Self.VrstaSubjekta" Multiplicity="1" />
+          <End Role="PoslovniSubjekt" Type="Self.PoslovniSubjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VrstaSubjekta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PoslovniSubjekt">
+              <PropertyRef Name="VrstaSubjekta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proizvodi_Kategorije">
+          <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+          <End Role="Proizvodi" Type="Self.Proizvodi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorija">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proizvodi">
+              <PropertyRef Name="Kategorija" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromjeneStanjaDokumenta_Dokument">
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="1" />
+          <End Role="PromjeneStanjaDokumenta" Type="Self.PromjeneStanjaDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromjeneStanjaDokumenta">
+              <PropertyRef Name="Dokument" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromjeneStanjaDokumenta_StanjeDokumenta">
+          <End Role="StanjeDokumenta" Type="Self.StanjeDokumenta" Multiplicity="1" />
+          <End Role="PromjeneStanjaDokumenta" Type="Self.PromjeneStanjaDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StanjeDokumenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromjeneStanjaDokumenta">
+              <PropertyRef Name="StanjeDokumenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromjeneStanjaDokumenta_Zaposlenik">
+          <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="1" />
+          <End Role="PromjeneStanjaDokumenta" Type="Self.PromjeneStanjaDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposlenik">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromjeneStanjaDokumenta">
+              <PropertyRef Name="Zaposlenik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StavkeDokumenta_Dukument">
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="1" />
+          <End Role="StavkeDokumenta" Type="Self.StavkeDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StavkeDokumenta">
+              <PropertyRef Name="Dokument" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StavkeDokumenta_Proizvod">
+          <End Role="Proizvodi" Type="Self.Proizvodi" Multiplicity="1" />
+          <End Role="StavkeDokumenta" Type="Self.StavkeDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proizvodi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StavkeDokumenta">
+              <PropertyRef Name="Proizvod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaposlenik_Razina">
+          <End Role="RazinaOvlasti" Type="Self.RazinaOvlasti" Multiplicity="1" />
+          <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RazinaOvlasti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Zaposlenik">
+              <PropertyRef Name="RazinaOvlasti" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CroMedDB_DataModelStoreContainer">
+          <EntitySet Name="Dokument" EntityType="Self.Dokument" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategorija" EntityType="Self.Kategorija" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PoslovniSubjekt" EntityType="Self.PoslovniSubjekt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proizvodi" EntityType="Self.Proizvodi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PromjeneStanjaDokumenta" EntityType="Self.PromjeneStanjaDokumenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RazinaOvlasti" EntityType="Self.RazinaOvlasti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StanjeDokumenta" EntityType="Self.StanjeDokumenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StavkeDokumenta" EntityType="Self.StavkeDokumenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VrstaSubjekta" EntityType="Self.VrstaSubjekta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zaposlenik" EntityType="Self.Zaposlenik" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Dokument_ToPoslovniSubjekt" Association="Self.FK_Dokument_ToPoslovniSubjekt">
+            <End Role="PoslovniSubjekt" EntitySet="PoslovniSubjekt" />
+            <End Role="Dokument" EntitySet="Dokument" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoslovniSubjekt_VrstaSubjekta" Association="Self.FK_PoslovniSubjekt_VrstaSubjekta">
+            <End Role="VrstaSubjekta" EntitySet="VrstaSubjekta" />
+            <End Role="PoslovniSubjekt" EntitySet="PoslovniSubjekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proizvodi_Kategorije" Association="Self.FK_Proizvodi_Kategorije">
+            <End Role="Kategorija" EntitySet="Kategorija" />
+            <End Role="Proizvodi" EntitySet="Proizvodi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromjeneStanjaDokumenta_Dokument" Association="Self.FK_PromjeneStanjaDokumenta_Dokument">
+            <End Role="Dokument" EntitySet="Dokument" />
+            <End Role="PromjeneStanjaDokumenta" EntitySet="PromjeneStanjaDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromjeneStanjaDokumenta_StanjeDokumenta" Association="Self.FK_PromjeneStanjaDokumenta_StanjeDokumenta">
+            <End Role="StanjeDokumenta" EntitySet="StanjeDokumenta" />
+            <End Role="PromjeneStanjaDokumenta" EntitySet="PromjeneStanjaDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromjeneStanjaDokumenta_Zaposlenik" Association="Self.FK_PromjeneStanjaDokumenta_Zaposlenik">
+            <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+            <End Role="PromjeneStanjaDokumenta" EntitySet="PromjeneStanjaDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StavkeDokumenta_Dukument" Association="Self.FK_StavkeDokumenta_Dukument">
+            <End Role="Dokument" EntitySet="Dokument" />
+            <End Role="StavkeDokumenta" EntitySet="StavkeDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StavkeDokumenta_Proizvod" Association="Self.FK_StavkeDokumenta_Proizvod">
+            <End Role="Proizvodi" EntitySet="Proizvodi" />
+            <End Role="StavkeDokumenta" EntitySet="StavkeDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaposlenik_Razina" Association="Self.FK_Zaposlenik_Razina">
+            <End Role="RazinaOvlasti" EntitySet="RazinaOvlasti" />
+            <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CroMedDB_DataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Dokument">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PoslovniSubjekt" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PoslovniSubjekt1" Relationship="Self.FK_Dokument_ToPoslovniSubjekt" FromRole="Dokument" ToRole="PoslovniSubjekt" />
+          <NavigationProperty Name="PromjeneStanjaDokumenta" Relationship="Self.FK_PromjeneStanjaDokumenta_Dokument" FromRole="Dokument" ToRole="PromjeneStanjaDokumenta" />
+          <NavigationProperty Name="StavkeDokumenta" Relationship="Self.FK_StavkeDokumenta_Dukument" FromRole="Dokument" ToRole="StavkeDokumenta" />
+        </EntityType>
+        <EntityType Name="Kategorija">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Proizvodi" Relationship="CroMedDB_DataModel.FK_Proizvodi_Kategorije" FromRole="Kategorija" ToRole="Proizvodi" />
+        </EntityType>
+        <EntityType Name="PoslovniSubjekt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kontakt" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Adresa" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OIB" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="VrstaSubjekta" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Dokument" Relationship="Self.FK_Dokument_ToPoslovniSubjekt" FromRole="PoslovniSubjekt" ToRole="Dokument" />
+          <NavigationProperty Name="VrstaSubjekta1" Relationship="Self.FK_PoslovniSubjekt_VrstaSubjekta" FromRole="PoslovniSubjekt" ToRole="VrstaSubjekta" />
+        </EntityType>
+        <EntityType Name="Proizvodi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kategorija" Type="Int32" Nullable="false" />
+          <Property Name="StanjeZaliha" Type="Int32" Nullable="false" />
+          <Property Name="NabavnaCijena" Type="Double" />
+          <Property Name="ProdajnaCijena" Type="Double" />
+          <NavigationProperty Name="StavkeDokumenta" Relationship="Self.FK_StavkeDokumenta_Proizvod" FromRole="Proizvodi" ToRole="StavkeDokumenta" />
+          <NavigationProperty Name="Kategorija1" Relationship="CroMedDB_DataModel.FK_Proizvodi_Kategorije" FromRole="Proizvodi" ToRole="Kategorija" />
+        </EntityType>
+        <EntityType Name="RazinaOvlasti">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Zaposlenik" Relationship="CroMedDB_DataModel.FK_Zaposlenik_Razina" FromRole="RazinaOvlasti" ToRole="Zaposlenik" />
+        </EntityType>
+        <EntityType Name="StanjeDokumenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Vrsta" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PromjeneStanjaDokumenta" Relationship="Self.FK_PromjeneStanjaDokumenta_StanjeDokumenta" FromRole="StanjeDokumenta" ToRole="PromjeneStanjaDokumenta" />
+        </EntityType>
+        <EntityType Name="VrstaSubjekta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Opis" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PoslovniSubjekt" Relationship="Self.FK_PoslovniSubjekt_VrstaSubjekta" FromRole="VrstaSubjekta" ToRole="PoslovniSubjekt" />
+        </EntityType>
+        <EntityType Name="Zaposlenik">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ime" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Prezime" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kontakt" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazinaOvlasti" Type="Int32" Nullable="false" />
+          <Property Name="KorisnickoIme" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Lozinka" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PromjeneStanjaDokumenta" Relationship="Self.FK_PromjeneStanjaDokumenta_Zaposlenik" FromRole="Zaposlenik" ToRole="PromjeneStanjaDokumenta" />
+          <NavigationProperty Name="RazinaOvlasti1" Relationship="CroMedDB_DataModel.FK_Zaposlenik_Razina" FromRole="Zaposlenik" ToRole="RazinaOvlasti" />
+        </EntityType>
+        <EntityType Name="PromjeneStanjaDokumenta">
+          <Key>
+            <PropertyRef Name="Dokument" />
+            <PropertyRef Name="StanjeDokumenta" />
+          </Key>
+          <Property Name="Dokument" Type="Int32" Nullable="false" />
+          <Property Name="StanjeDokumenta" Type="Int32" Nullable="false" />
+          <Property Name="DatumPromjene" Type="DateTime" Precision="3" />
+          <Property Name="Napomena" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Zaposlenik" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Dokument1" Relationship="Self.FK_PromjeneStanjaDokumenta_Dokument" FromRole="PromjeneStanjaDokumenta" ToRole="Dokument" />
+          <NavigationProperty Name="StanjeDokumenta1" Relationship="Self.FK_PromjeneStanjaDokumenta_StanjeDokumenta" FromRole="PromjeneStanjaDokumenta" ToRole="StanjeDokumenta" />
+          <NavigationProperty Name="Zaposlenik1" Relationship="Self.FK_PromjeneStanjaDokumenta_Zaposlenik" FromRole="PromjeneStanjaDokumenta" ToRole="Zaposlenik" />
+        </EntityType>
+        <EntityType Name="StavkeDokumenta">
+          <Key>
+            <PropertyRef Name="Dokument" />
+            <PropertyRef Name="Proizvod" />
+          </Key>
+          <Property Name="Dokument" Type="Int32" Nullable="false" />
+          <Property Name="Proizvod" Type="Int32" Nullable="false" />
+          <Property Name="Kolicina" Type="Int32" Nullable="false" />
+          <Property Name="Rabat" Type="Double" />
+          <NavigationProperty Name="Dokument1" Relationship="Self.FK_StavkeDokumenta_Dukument" FromRole="StavkeDokumenta" ToRole="Dokument" />
+          <NavigationProperty Name="Proizvodi" Relationship="Self.FK_StavkeDokumenta_Proizvod" FromRole="StavkeDokumenta" ToRole="Proizvodi" />
+        </EntityType>
+        <Association Name="FK_Dokument_ToPoslovniSubjekt">
+          <End Role="PoslovniSubjekt" Type="Self.PoslovniSubjekt" Multiplicity="1" />
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PoslovniSubjekt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dokument">
+              <PropertyRef Name="PoslovniSubjekt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromjeneStanjaDokumenta_Dokument">
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="1" />
+          <End Role="PromjeneStanjaDokumenta" Type="Self.PromjeneStanjaDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromjeneStanjaDokumenta">
+              <PropertyRef Name="Dokument" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StavkeDokumenta_Dukument">
+          <End Role="Dokument" Type="Self.Dokument" Multiplicity="1" />
+          <End Role="StavkeDokumenta" Type="Self.StavkeDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dokument">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StavkeDokumenta">
+              <PropertyRef Name="Dokument" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoslovniSubjekt_VrstaSubjekta">
+          <End Role="VrstaSubjekta" Type="Self.VrstaSubjekta" Multiplicity="1" />
+          <End Role="PoslovniSubjekt" Type="Self.PoslovniSubjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VrstaSubjekta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PoslovniSubjekt">
+              <PropertyRef Name="VrstaSubjekta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StavkeDokumenta_Proizvod">
+          <End Role="Proizvodi" Type="Self.Proizvodi" Multiplicity="1" />
+          <End Role="StavkeDokumenta" Type="Self.StavkeDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proizvodi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StavkeDokumenta">
+              <PropertyRef Name="Proizvod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromjeneStanjaDokumenta_StanjeDokumenta">
+          <End Role="StanjeDokumenta" Type="Self.StanjeDokumenta" Multiplicity="1" />
+          <End Role="PromjeneStanjaDokumenta" Type="Self.PromjeneStanjaDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StanjeDokumenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromjeneStanjaDokumenta">
+              <PropertyRef Name="StanjeDokumenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PromjeneStanjaDokumenta_Zaposlenik">
+          <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="1" />
+          <End Role="PromjeneStanjaDokumenta" Type="Self.PromjeneStanjaDokumenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposlenik">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromjeneStanjaDokumenta">
+              <PropertyRef Name="Zaposlenik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CroMedDB_DataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dokument" EntityType="Self.Dokument" />
+          <EntitySet Name="Kategorija" EntityType="Self.Kategorija" />
+          <EntitySet Name="PoslovniSubjekt" EntityType="Self.PoslovniSubjekt" />
+          <EntitySet Name="Proizvodi" EntityType="Self.Proizvodi" />
+          <EntitySet Name="RazinaOvlasti" EntityType="Self.RazinaOvlasti" />
+          <EntitySet Name="StanjeDokumenta" EntityType="Self.StanjeDokumenta" />
+          <EntitySet Name="VrstaSubjekta" EntityType="Self.VrstaSubjekta" />
+          <EntitySet Name="Zaposlenik" EntityType="Self.Zaposlenik" />
+          <EntitySet Name="PromjeneStanjaDokumenta" EntityType="Self.PromjeneStanjaDokumenta" />
+          <EntitySet Name="StavkeDokumenta" EntityType="Self.StavkeDokumenta" />
+          <AssociationSet Name="FK_Dokument_ToPoslovniSubjekt" Association="Self.FK_Dokument_ToPoslovniSubjekt">
+            <End Role="PoslovniSubjekt" EntitySet="PoslovniSubjekt" />
+            <End Role="Dokument" EntitySet="Dokument" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromjeneStanjaDokumenta_Dokument" Association="Self.FK_PromjeneStanjaDokumenta_Dokument">
+            <End Role="Dokument" EntitySet="Dokument" />
+            <End Role="PromjeneStanjaDokumenta" EntitySet="PromjeneStanjaDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StavkeDokumenta_Dukument" Association="Self.FK_StavkeDokumenta_Dukument">
+            <End Role="Dokument" EntitySet="Dokument" />
+            <End Role="StavkeDokumenta" EntitySet="StavkeDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoslovniSubjekt_VrstaSubjekta" Association="Self.FK_PoslovniSubjekt_VrstaSubjekta">
+            <End Role="VrstaSubjekta" EntitySet="VrstaSubjekta" />
+            <End Role="PoslovniSubjekt" EntitySet="PoslovniSubjekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StavkeDokumenta_Proizvod" Association="Self.FK_StavkeDokumenta_Proizvod">
+            <End Role="Proizvodi" EntitySet="Proizvodi" />
+            <End Role="StavkeDokumenta" EntitySet="StavkeDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromjeneStanjaDokumenta_StanjeDokumenta" Association="Self.FK_PromjeneStanjaDokumenta_StanjeDokumenta">
+            <End Role="StanjeDokumenta" EntitySet="StanjeDokumenta" />
+            <End Role="PromjeneStanjaDokumenta" EntitySet="PromjeneStanjaDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PromjeneStanjaDokumenta_Zaposlenik" Association="Self.FK_PromjeneStanjaDokumenta_Zaposlenik">
+            <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+            <End Role="PromjeneStanjaDokumenta" EntitySet="PromjeneStanjaDokumenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proizvodi_Kategorije" Association="CroMedDB_DataModel.FK_Proizvodi_Kategorije">
+            <End Role="Kategorija" EntitySet="Kategorija" />
+            <End Role="Proizvodi" EntitySet="Proizvodi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaposlenik_Razina" Association="CroMedDB_DataModel.FK_Zaposlenik_Razina">
+            <End Role="RazinaOvlasti" EntitySet="RazinaOvlasti" />
+            <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Proizvodi_Kategorije">
+          <End Type="CroMedDB_DataModel.Kategorija" Role="Kategorija" Multiplicity="1" />
+          <End Type="CroMedDB_DataModel.Proizvodi" Role="Proizvodi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorija">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proizvodi">
+              <PropertyRef Name="Kategorija" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaposlenik_Razina">
+          <End Type="CroMedDB_DataModel.RazinaOvlasti" Role="RazinaOvlasti" Multiplicity="1" />
+          <End Type="CroMedDB_DataModel.Zaposlenik" Role="Zaposlenik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RazinaOvlasti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Zaposlenik">
+              <PropertyRef Name="RazinaOvlasti" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CroMedDB_DataModelStoreContainer" CdmEntityContainer="CroMedDB_DataEntities">
+          <EntitySetMapping Name="Dokument">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.Dokument">
+              <MappingFragment StoreEntitySet="Dokument">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PoslovniSubjekt" ColumnName="PoslovniSubjekt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategorija">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.Kategorija">
+              <MappingFragment StoreEntitySet="Kategorija">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PoslovniSubjekt">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.PoslovniSubjekt">
+              <MappingFragment StoreEntitySet="PoslovniSubjekt">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Kontakt" ColumnName="Kontakt" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="OIB" ColumnName="OIB" />
+                <ScalarProperty Name="VrstaSubjekta" ColumnName="VrstaSubjekta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proizvodi">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.Proizvodi">
+              <MappingFragment StoreEntitySet="Proizvodi">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Kategorija" ColumnName="Kategorija" />
+                <ScalarProperty Name="StanjeZaliha" ColumnName="StanjeZaliha" />
+                <ScalarProperty Name="NabavnaCijena" ColumnName="NabavnaCijena" />
+                <ScalarProperty Name="ProdajnaCijena" ColumnName="ProdajnaCijena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RazinaOvlasti">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.RazinaOvlasti">
+              <MappingFragment StoreEntitySet="RazinaOvlasti">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StanjeDokumenta">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.StanjeDokumenta">
+              <MappingFragment StoreEntitySet="StanjeDokumenta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Vrsta" ColumnName="Vrsta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VrstaSubjekta">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.VrstaSubjekta">
+              <MappingFragment StoreEntitySet="VrstaSubjekta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zaposlenik">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.Zaposlenik">
+              <MappingFragment StoreEntitySet="Zaposlenik">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Kontakt" ColumnName="Kontakt" />
+                <ScalarProperty Name="RazinaOvlasti" ColumnName="RazinaOvlasti" />
+                <ScalarProperty Name="KorisnickoIme" ColumnName="KorisnickoIme" />
+                <ScalarProperty Name="Lozinka" ColumnName="Lozinka" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PromjeneStanjaDokumenta">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.PromjeneStanjaDokumenta">
+              <MappingFragment StoreEntitySet="PromjeneStanjaDokumenta">
+                <ScalarProperty Name="Dokument" ColumnName="Dokument" />
+                <ScalarProperty Name="StanjeDokumenta" ColumnName="StanjeDokumenta" />
+                <ScalarProperty Name="DatumPromjene" ColumnName="DatumPromjene" />
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+                <ScalarProperty Name="Zaposlenik" ColumnName="Zaposlenik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StavkeDokumenta">
+            <EntityTypeMapping TypeName="CroMedDB_DataModel.StavkeDokumenta">
+              <MappingFragment StoreEntitySet="StavkeDokumenta">
+                <ScalarProperty Name="Dokument" ColumnName="Dokument" />
+                <ScalarProperty Name="Proizvod" ColumnName="Proizvod" />
+                <ScalarProperty Name="Kolicina" ColumnName="Kolicina" />
+                <ScalarProperty Name="Rabat" ColumnName="Rabat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

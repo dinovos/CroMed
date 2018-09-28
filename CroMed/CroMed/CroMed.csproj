@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2EAC44AE-9D2B-46C1-919F-7129921C2A1C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CroMed</RootNamespace>
+    <AssemblyName>CroMed</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RazinaOvlasti">
+      <HintPath>..\Razine_dll\RazinaOvlasti.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CroMedDB_DataDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CroMedDB_DataDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CroMedModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CroMedModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CroMedModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CroMedModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CroMedModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DodajUrediZaposlenika.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DodajUrediZaposlenika.Designer.cs">
+      <DependentUpon>DodajUrediZaposlenika.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dokument.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Kategorija.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PoslovniSubjekt.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PoslovniSubjektiAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PoslovniSubjektiAdmin.Designer.cs">
+      <DependentUpon>PoslovniSubjektiAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DodajUrediPoslovniSubjekt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DodajUrediPoslovniSubjekt.Designer.cs">
+      <DependentUpon>DodajUrediPoslovniSubjekt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DodajKategorijuAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DodajKategorijuAdmin.Designer.cs">
+      <DependentUpon>DodajKategorijuAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DodajOpremuAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DodajOpremuAdmin.Designer.cs">
+      <DependentUpon>DodajOpremuAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlavniIzbornikAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GlavniIzbornikAdmin.Designer.cs">
+      <DependentUpon>GlavniIzbornikAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KategorijeFormaAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KategorijeFormaAdmin.Designer.cs">
+      <DependentUpon>KategorijeFormaAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginForma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForma.Designer.cs">
+      <DependentUpon>LoginForma.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IzradiDokumentAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IzradiDokumentAdmin.Designer.cs">
+      <DependentUpon>IzradiDokumentAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DokumentiAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DokumentiAdmin.Designer.cs">
+      <DependentUpon>DokumentiAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OpremaFormaAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpremaFormaAdmin.Designer.cs">
+      <DependentUpon>OpremaFormaAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Proizvodi.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromjeneStanjaDokumenta.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RazinaOvlasti.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StanjeDokumenta.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StavkeDokumenta.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UrediStanjeDokumenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UrediStanjeDokumenta.Designer.cs">
+      <DependentUpon>UrediStanjeDokumenta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VrstaSubjekta.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZaposleniciFormaAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ZaposleniciFormaAdmin.Designer.cs">
+      <DependentUpon>ZaposleniciFormaAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Zaposlenik.cs">
+      <DependentUpon>CroMedModel.tt</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DodajUrediZaposlenika.resx">
+      <DependentUpon>DodajUrediZaposlenika.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PoslovniSubjektiAdmin.resx">
+      <DependentUpon>PoslovniSubjektiAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DodajUrediPoslovniSubjekt.resx">
+      <DependentUpon>DodajUrediPoslovniSubjekt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DodajKategorijuAdmin.resx">
+      <DependentUpon>DodajKategorijuAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DodajOpremuAdmin.resx">
+      <DependentUpon>DodajOpremuAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlavniIzbornikAdmin.resx">
+      <DependentUpon>GlavniIzbornikAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KategorijeFormaAdmin.resx">
+      <DependentUpon>KategorijeFormaAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForma.resx">
+      <DependentUpon>LoginForma.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IzradiDokumentAdmin.resx">
+      <DependentUpon>IzradiDokumentAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DokumentiAdmin.resx">
+      <DependentUpon>DokumentiAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpremaFormaAdmin.resx">
+      <DependentUpon>OpremaFormaAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="UrediStanjeDokumenta.resx">
+      <DependentUpon>UrediStanjeDokumenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZaposleniciFormaAdmin.resx">
+      <DependentUpon>ZaposleniciFormaAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EntityDeploy Include="CroMedModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CroMedModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="CroMedDB_DataDataSet.xsc">
+      <DependentUpon>CroMedDB_DataDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="CroMedDB_DataDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CroMedDB_DataDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CroMedDB_DataDataSet.xss">
+      <DependentUpon>CroMedDB_DataDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="CroMedModel.edmx.diagram">
+      <DependentUpon>CroMedModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Dokument.datasource" />
+    <None Include="Properties\DataSources\Kategorija.datasource" />
+    <None Include="Properties\DataSources\PoslovniSubjekt.datasource" />
+    <None Include="Properties\DataSources\Proizvodi.datasource" />
+    <None Include="Properties\DataSources\RazinaOvlasti.datasource" />
+    <None Include="Properties\DataSources\StanjeDokumenta.datasource" />
+    <None Include="Properties\DataSources\StavkeDokumenta.datasource" />
+    <None Include="Properties\DataSources\VrstaSubjekta.datasource" />
+    <None Include="Properties\DataSources\Zaposlenik.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CroMedModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CroMedModel.Context.cs</LastGenOutput>
+      <DependentUpon>CroMedModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="CroMedModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CroMedModel.edmx</DependentUpon>
+      <LastGenOutput>CroMedModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
